@@ -29,6 +29,7 @@ This is a professional e-commerce website built using the MERN stack with Tailwi
 
 ### Installation
 
+
 1. Clone the repository:
    git clone https://github.com/yourusername/your-repo-name.git](https://github.com/priteshGolakiya/Frontend.git
    cd your-repo-nameFrontend
