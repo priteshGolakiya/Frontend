@@ -29,15 +29,15 @@ This is a professional e-commerce website built using the MERN stack with Tailwi
 
 ### Installation
 
-1. Clone the repository:
+-Clone the repository:
 -git clone https://github.com/priteshGolakiya/Frontend.git
 -cd your-repo-nameFrontend
    
-2.Install NPM packages:
+- Install NPM packages:
 -npm install
    
-3.Create a .env file in the root directory and add your Cloudinary cloud name:
+- Create a .env file in the root directory and add your Cloudinary cloud name:
 -VITE_APP_CLOUDINARY_NAME=dlbflgtdr
    
-4.Start the development server:
+- Start the development server:
 -npm run dev
