@@ -3,6 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import summaryAPI from "../../../../utils/summaryAPI";
 import subcategoryOptionsDataOrignale from "../../../../utils/subcategoryOptionsData";
+import { useSelector } from "react-redux";
 
 // Move the subcategoryOptionsData object outside the component
 
@@ -12,7 +13,9 @@ const SubNewCategory = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedSubcategory, setSelectedSubcategory] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const token = useSelector((store) => {
+    return store.user.token;
+  });
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -20,7 +23,7 @@ const SubNewCategory = () => {
         const response = await axios.get(summaryAPI.admin.getAllCategory.url, {
           withCredentials: true,
           headers: {
-            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         });
         setCategories(response.data.categories);
@@ -64,7 +67,9 @@ const SubNewCategory = () => {
         { name },
         {
           withCredentials: true,
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 

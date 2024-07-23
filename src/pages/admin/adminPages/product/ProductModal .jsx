@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import summaryAPI from "../../../../utils/summaryAPI";
 import uploadImage from "../../../../utils/uploadImage";
+import { useSelector } from "react-redux";
 
 const ProductModal = ({ isOpen, onClose, product, refreshProducts }) => {
   const [formData, setFormData] = useState({
@@ -20,7 +21,9 @@ const ProductModal = ({ isOpen, onClose, product, refreshProducts }) => {
     images: [],
     offers: "",
   });
-
+  const token = useSelector((store) => {
+    return store.user.token;
+  });
   const [imagePreviews, setImagePreviews] = useState([]);
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -32,6 +35,9 @@ const ProductModal = ({ isOpen, onClose, product, refreshProducts }) => {
       try {
         const response = await axios.get(summaryAPI.admin.getAllCategory.url, {
           withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
         setCategories(response.data.categories);
       } catch (error) {
@@ -46,6 +52,9 @@ const ProductModal = ({ isOpen, onClose, product, refreshProducts }) => {
           summaryAPI.admin.getAllSubcategories.url,
           {
             withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }
         );
         setSubcategories(response.data.subcategories);
@@ -157,7 +166,7 @@ const ProductModal = ({ isOpen, onClose, product, refreshProducts }) => {
       const response = await axios.put(url, payload, {
         withCredentials: true,
         headers: {
-          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       });
 

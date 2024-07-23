@@ -6,6 +6,7 @@ import Preloader from "../../component/Preloader";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
 import Filters from "../../component/common/Filters";
+import { useSelector } from "react-redux";
 
 const SubCategoryListPage = () => {
   const { id } = useParams();
@@ -13,7 +14,9 @@ const SubCategoryListPage = () => {
   const [subcategory, setSubcategory] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const token = useSelector((store) => {
+    return store.user.token;
+  });
   const [sortOrder, setSortOrder] = useState("");
   const [priceRange, setPriceRange] = useState({ min: "", max: "" });
   const [ratingFilter, setRatingFilter] = useState("");
@@ -27,7 +30,7 @@ const SubCategoryListPage = () => {
           {
             withCredentials: true,
             headers: {
-              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
             },
           }
         );

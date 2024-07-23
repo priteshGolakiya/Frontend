@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import loginIcon from "../../assets/signin.gif";
+import loginIcon from "../../assest/signin.gif";
 import { setToken, setUserDetails } from "../../redux/slices/userSlice";
 import summaryAPI from "../../utils/summaryAPI";
 import { setCartData } from "../../redux/slices/cartSlice";
@@ -47,8 +47,8 @@ const Login = () => {
         }
       );
 
-      const { data, token } = loginResponse.data;
-      dispatch(setUserDetails(data.user));
+      const { user, token } = loginResponse.data.data;
+      dispatch(setUserDetails(user));
       dispatch(setToken(token));
 
       try {
@@ -56,6 +56,9 @@ const Login = () => {
           summaryAPI.common.getUserCart.url,
           {
             withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }
         );
         dispatch(setCartData(cartResponse.data));

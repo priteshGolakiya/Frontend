@@ -2,6 +2,7 @@
 import axios from "axios";
 import { useState } from "react";
 import summaryAPI from "../../utils/summaryAPI";
+import { useSelector } from "react-redux";
 
 const Address = ({ fetchAddresses }) => {
   const [formData, setFormData] = useState({
@@ -12,7 +13,9 @@ const Address = ({ fetchAddresses }) => {
     zipCode: "",
     isDefault: false,
   });
-
+  const token = useSelector((store) => {
+    return store.user.token;
+  });
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData({
@@ -26,6 +29,9 @@ const Address = ({ fetchAddresses }) => {
     try {
       await axios.post(summaryAPI.common.createAddress.url, formData, {
         withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       fetchAddresses();
       setFormData({

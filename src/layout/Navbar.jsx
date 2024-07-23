@@ -5,6 +5,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import summaryAPI from "../utils/summaryAPI";
 import defaultImg from "../default.jpg";
+import LOGO from "../assest/1.png";
 import {
   setUserDetails,
   setError,
@@ -19,12 +20,17 @@ const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const token = useSelector((store) => {
+    return store.user.token;
+  });
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
         const response = await axios.get(summaryAPI.common.userDetails.url, {
           withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
         dispatch(setUserDetails(response.data.data));
       } catch (err) {
@@ -41,6 +47,9 @@ const Navbar = () => {
       try {
         const response = await axios.get(summaryAPI.common.getUserCart.url, {
           withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
         dispatch(setCartData(response?.data));
       } catch (err) {
@@ -56,7 +65,12 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.get(summaryAPI.common.logout.url, { withCredentials: true });
+      await axios.get(summaryAPI.common.logout.url, {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       dispatch(clearUserDetails());
       dispatch(clearCart());
       toast.success("Logged out successfully");
@@ -98,8 +112,8 @@ const Navbar = () => {
       <nav className="navbar-container bg-white fixed shadow-lg w-full z-50">
         <div className="flex items-center justify-between w-full py-4 px-4 md:px-10 text-lg text-gray-700">
           <div className="flex items-center">
-            <Link to="/" className="mr-4 text-xl font-bold">
-              Logo
+            <Link to="/" className="mr-4 ml-4 w-3/5 h-3/5 ">
+              <img src={LOGO} alt="LOGO" className="h-1/3 w-1/3" />
             </Link>
             <div className="md:hidden cursor-pointer" onClick={toggleMenu}>
               <i

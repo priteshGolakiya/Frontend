@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import summaryAPI from "../../utils/summaryAPI";
 import Preloader from "../../component/Preloader";
+import { useSelector } from "react-redux";
 
 const AdminHome = () => {
   const [stats, setStats] = useState({
@@ -12,7 +13,9 @@ const AdminHome = () => {
     subcategories: 0,
   });
   const [loading, setLoading] = useState(true);
-
+  const token = useSelector((store) => {
+    return store.user.token;
+  });
   const fetchStats = async () => {
     try {
       const [usersResponse, categoriesResponse, subcategoriesResponse] =
@@ -20,19 +23,19 @@ const AdminHome = () => {
           axios.get(summaryAPI.admin.getAllUser.url, {
             withCredentials: true,
             headers: {
-              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
             },
           }),
           axios.get(summaryAPI.admin.getAllCategory.url, {
             withCredentials: true,
             headers: {
-              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
             },
           }),
           axios.get(summaryAPI.admin.getAllSubcategories.url, {
             withCredentials: true,
             headers: {
-              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
             },
           }),
         ]);

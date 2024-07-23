@@ -7,6 +7,7 @@ import defaultImg from "../../../../default.jpg";
 import Preloader from "../../../../component/Preloader";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useSelector } from "react-redux";
 
 const AllUser = () => {
   const [userData, setUserData] = useState([]);
@@ -19,14 +20,16 @@ const AllUser = () => {
     password: "",
   });
   const [error, setError] = useState(null);
-
+  const token = useSelector((store) => {
+    return store.user.token;
+  });
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(summaryAPI.admin.getAllUser.url, {
           withCredentials: true,
           headers: {
-            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         });
         setUserData(response.data.data);
@@ -79,7 +82,7 @@ const AllUser = () => {
         {
           withCredentials: true,
           headers: {
-            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -101,7 +104,7 @@ const AllUser = () => {
       await axios.delete(`${summaryAPI.admin.deleteUser.url}/${id}`, {
         withCredentials: true,
         headers: {
-          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       });
       setUserData((prevData) => prevData.filter((user) => user._id !== id));

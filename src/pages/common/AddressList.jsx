@@ -3,18 +3,24 @@ import axios from "axios";
 import summaryAPI from "../../utils/summaryAPI";
 import Address from "./Address";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const AddressList = () => {
   const [addresses, setAddresses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const token = useSelector((store) => {
+    return store.user.token;
+  });
   const fetchAddresses = async () => {
     try {
       const { data } = await axios.get(
         summaryAPI.common.getAddressesByUserId.url,
         {
           withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
       setAddresses(data);
@@ -35,6 +41,9 @@ const AddressList = () => {
         `${summaryAPI.common.getAllAddresses.url}/${addressId}`,
         {
           withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
       setAddresses(addresses.filter((address) => address._id !== addressId));

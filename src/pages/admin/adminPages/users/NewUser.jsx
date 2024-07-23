@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import loginIcon from "../../../../assets/signin.gif";
+import loginIcon from "../../../../assest/signin.gif";
 import axios from "axios";
 import summaryAPI from "../../../../utils/summaryAPI";
 import { toast } from "react-toastify";
 import uploadImage from "../../../../utils/uploadImage";
+import { useSelector } from "react-redux";
 const NewUser = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -18,7 +19,9 @@ const NewUser = () => {
   const [error, setError] = useState("");
   const [uploading, setUploading] = useState(false);
   const [imageSelected, setImageSelected] = useState(false);
-
+  const token = useSelector((store) => {
+    return store.user.token;
+  });
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -71,7 +74,16 @@ const NewUser = () => {
     }
 
     try {
-      const response = await axios.post(summaryAPI.common.signUP.url, formData);
+      const response = await axios.post(
+        summaryAPI.common.signUP.url,
+        formData,
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       toast.success(response.data.message);
       setFormData({
         userName: "",

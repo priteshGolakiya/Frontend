@@ -4,19 +4,24 @@ import summaryAPI from "../../../../utils/summaryAPI";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Preloader from "../../../../component/Preloader";
+import { useSelector } from "react-redux";
 
 const CategoryList = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+ 
+  const token = useSelector((store) => {
+    return store.user.token;
+  });
+  
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const response = await axios.get(summaryAPI.admin.getAllCategory.url, {
           withCredentials: true,
           headers: {
-            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         });
         setCategories(response.data.categories);
@@ -43,7 +48,7 @@ const CategoryList = () => {
           {
             withCredentials: true,
             headers: {
-              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
             },
           }
         );

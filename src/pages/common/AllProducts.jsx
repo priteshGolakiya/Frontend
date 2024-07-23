@@ -5,6 +5,7 @@ import Preloader from "../../component/Preloader";
 import summaryAPI from "../../utils/summaryAPI";
 import MemoizedProductList from "./MemoizedProductList";
 import SkeletonLoader from "../../component/SkeletonLoader";
+import { useSelector } from "react-redux";
 
 const useInfiniteScroll = (callback) => {
   const observer = useRef();
@@ -40,11 +41,17 @@ const AllProducts = () => {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [fetching, setFetching] = useState(false);
-
+  const token = useSelector((store) => {
+    return store.user.token;
+  });
   const fetchProducts = async () => {
     try {
       setFetching(true);
       const response = await axios.get(summaryAPI.common.getAllProducts.url, {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         params: { page: page, limit: 50 },
       });
 

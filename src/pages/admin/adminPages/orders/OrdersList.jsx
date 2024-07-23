@@ -3,11 +3,14 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import summaryAPI from "../../../../utils/summaryAPI";
+import { useSelector } from "react-redux";
 
 const OrdersList = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const token = useSelector((store) => {
+    return store.user.token;
+  });
   useEffect(() => {
     fetchOrders();
   }, []);
@@ -16,6 +19,9 @@ const OrdersList = () => {
     try {
       const response = await axios.get(summaryAPI.admin.getAllOrders.url, {
         withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       setOrders(response.data);
       setLoading(false);
@@ -30,7 +36,12 @@ const OrdersList = () => {
       await axios.post(
         `${summaryAPI.admin.updateOrderStatus.url}/${orderId}/status`,
         { status: newStatus },
-        { withCredentials: true }
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       toast.success("Order status updated successfully");
       fetchOrders();

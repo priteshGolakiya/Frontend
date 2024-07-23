@@ -1,4 +1,5 @@
-const backendDomain = "http://localhost:5000/api";
+// const backendDomain = "http://localhost:5000";
+const backendDomain = "https://backend-y1aw.onrender.com";
 
 const summaryAPI = {
   /*------Common Routes------*/

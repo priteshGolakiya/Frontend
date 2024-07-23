@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import summaryAPI from "../../../../utils/summaryAPI";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 // const categories = [
 //   "Apparel & Accessories",
@@ -53,7 +54,9 @@ const NewCategory = () => {
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
   };
-
+  const token = useSelector((store) => {
+    return store.user.token;
+  });
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
@@ -68,7 +71,7 @@ const NewCategory = () => {
         {
           withCredentials: true,
           headers: {
-            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         }
       );

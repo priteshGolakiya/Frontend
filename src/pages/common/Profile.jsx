@@ -4,6 +4,7 @@ import summaryAPI from "../../utils/summaryAPI";
 import Modal from "../../component/Modal";
 import { toast } from "react-toastify";
 import Preloader from "../../component/Preloader";
+import { useSelector } from "react-redux";
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
@@ -17,11 +18,17 @@ const Profile = () => {
   const handleTogglePassword = () => {
     setShowPassword((prevShow) => !prevShow);
   };
+  const token = useSelector((store) => {
+    return store.user.token;
+  });
 
   const fetchData = async () => {
     try {
       const response = await axios.get(summaryAPI.common.userDetails.url, {
         withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       setUserData(response.data.data);
@@ -38,6 +45,9 @@ const Profile = () => {
     try {
       const response = await axios.get(summaryAPI.common.getAllOrders.url, {
         withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       setOrders(response.data || []);
     } catch (error) {
@@ -61,7 +71,12 @@ const Profile = () => {
       const response = await axios.put(
         summaryAPI.common.updateUser.url,
         editedUser,
-        { withCredentials: true }
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setUserData(response.data.data);
       setEditedUser(response.data.data);
@@ -91,7 +106,12 @@ const Profile = () => {
       const response = await axios.post(
         `${summaryAPI.common.cancelOrder.url}/${orderId}/cancel`,
         {},
-        { withCredentials: true }
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       console.log("response", response);
       toast.success("Order cancelled successfully");
@@ -126,6 +146,9 @@ const Profile = () => {
         `${summaryAPI.common.getAllAddresses.url}/${addressId}`,
         {
           withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
       fetchData();
@@ -180,9 +203,7 @@ const Profile = () => {
               <div className="col-span-1">
                 <div className="mb-8 text-center">
                   <img
-                    src={
-                      userData.profilePic || "https://via.placeholder.com/150"
-                    }
+                    src={userData.profilePic || "../../assest/sampleImage.jpg"}
                     alt="Profile"
                     className="w-48 h-48 rounded-full mx-auto shadow-lg border-4 border-white"
                   />

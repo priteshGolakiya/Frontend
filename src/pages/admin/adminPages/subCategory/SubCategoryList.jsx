@@ -4,12 +4,15 @@ import summaryAPI from "../../../../utils/summaryAPI";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Preloader from "../../../../component/Preloader";
+import { useSelector } from "react-redux";
 
 const SubCategoryList = () => {
   const [subcategories, setSubcategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const token = useSelector((store) => {
+    return store.user.token;
+  });
   useEffect(() => {
     const fetchSubcategories = async () => {
       try {
@@ -18,7 +21,7 @@ const SubCategoryList = () => {
           {
             withCredentials: true,
             headers: {
-              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
             },
           }
         );
@@ -42,7 +45,7 @@ const SubCategoryList = () => {
           {
             withCredentials: true,
             headers: {
-              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
             },
           }
         );

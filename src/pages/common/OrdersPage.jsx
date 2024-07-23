@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import summaryAPI from "../../utils/summaryAPI";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { clearCart, setCartData } from "../../redux/slices/cartSlice";
 import { useNavigate } from "react-router-dom";
 const OrdersPage = () => {
@@ -12,7 +12,9 @@ const OrdersPage = () => {
   const [selectedCart, setSelectedCart] = useState("");
   const [selectedAddress, setSelectedAddress] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-
+  const token = useSelector((store) => {
+    return store.user.token;
+  });
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -35,6 +37,9 @@ const OrdersPage = () => {
     try {
       await axios.delete(summaryAPI.common.clearCart.url, {
         withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       dispatch(clearCart());
       setCartData(null);
@@ -47,6 +52,9 @@ const OrdersPage = () => {
     try {
       const response = await axios.get(summaryAPI.common.getAllOrders.url, {
         withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       setOrders(response.data);
     } catch (error) {
@@ -58,6 +66,9 @@ const OrdersPage = () => {
     try {
       const response = await axios.get(summaryAPI.common.getUserCart.url, {
         withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       const cartsData = Array.isArray(response.data)
         ? response.data
@@ -75,6 +86,9 @@ const OrdersPage = () => {
         summaryAPI.common.getAddressesByUserId.url,
         {
           withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
       setAddresses(response.data);
@@ -111,6 +125,9 @@ const OrdersPage = () => {
         orderData,
         {
           withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 

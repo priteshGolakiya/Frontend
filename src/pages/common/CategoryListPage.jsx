@@ -4,13 +4,16 @@ import axios from "axios";
 import summaryAPI from "../../utils/summaryAPI";
 import Preloader from "../../component/Preloader";
 import "react-photo-view/dist/react-photo-view.css";
+import { useSelector } from "react-redux";
 
 const CategoryListPage = () => {
   const { id } = useParams();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const token = useSelector((store) => {
+    return store.user.token;
+  });
   // Define your filters dynamically
   const filters = {
     excludeSubcategoryNames: ["Women's Clothing"], // Subcategories to be excluded
@@ -22,7 +25,13 @@ const CategoryListPage = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${summaryAPI.common.getAllCategoryById.url}/${id}`
+          `${summaryAPI.common.getAllCategoryById.url}/${id}`,
+          {
+            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         if (response.data.success) {
           setData(response.data.category);

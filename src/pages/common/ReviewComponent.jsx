@@ -12,7 +12,9 @@ const ReviewComponent = ({ onSubmitReview, productId }) => {
     review: "",
   });
   const user = useSelector((state) => state.user.user);
-
+  const token = useSelector((store) => {
+    return store.user.token;
+  });
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -23,6 +25,9 @@ const ReviewComponent = ({ onSubmitReview, productId }) => {
         `${summaryAPI.common.getReviewsforProduct.url}/${productId}`,
         {
           withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
       setData(response.data.reviews);
@@ -56,6 +61,9 @@ const ReviewComponent = ({ onSubmitReview, productId }) => {
           },
           {
             withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }
         );
 

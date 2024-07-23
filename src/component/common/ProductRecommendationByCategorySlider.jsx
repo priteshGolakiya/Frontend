@@ -15,6 +15,7 @@ import {
 import Preloader from "../Preloader";
 import { Link } from "react-router-dom";
 import scrollTop from "../../utils/scrollTop";
+import { useSelector } from "react-redux";
 
 const ProductRecommendationByCategorySlider = ({
   categoryId,
@@ -23,7 +24,9 @@ const ProductRecommendationByCategorySlider = ({
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const token = useSelector((store) => {
+    return store.user.token;
+  });
   useEffect(() => {
     const fetchData = async () => {
       if (!categoryId) {
@@ -36,6 +39,9 @@ const ProductRecommendationByCategorySlider = ({
           `${summaryAPI.common.getAllCategoryById.url}/${categoryId}`,
           {
             withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }
         );
 

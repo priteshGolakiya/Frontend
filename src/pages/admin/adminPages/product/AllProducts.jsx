@@ -7,6 +7,7 @@ import summaryAPI from "../../../../utils/summaryAPI";
 import Preloader from "../../../../component/Preloader";
 import ProductTable from "./ProductTable";
 import ProductModal from "./ProductModal ";
+import { useSelector } from "react-redux";
 
 const AllProducts = () => {
   const [products, setProducts] = useState([]);
@@ -16,7 +17,9 @@ const AllProducts = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
-
+  const token = useSelector((store) => {
+    return store.user.token;
+  });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,6 +31,9 @@ const AllProducts = () => {
     try {
       const response = await axios.get(summaryAPI.admin.getAllProducts.url, {
         withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       setProducts(response.data);
       setLoading(false);
@@ -41,6 +47,9 @@ const AllProducts = () => {
     try {
       const response = await axios.get(summaryAPI.admin.getAllCategory.url, {
         withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       setCategories(response.data.categories);
       setSubcategories(response.data.subcategories);
@@ -65,11 +74,19 @@ const AllProducts = () => {
         await axios.put(
           `${summaryAPI.admin.updateProduct.url}/${selectedProduct._id}`,
           formData,
-          { withCredentials: true }
+          {
+            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
       } else {
         await axios.post(summaryAPI.admin.createProduct.url, formData, {
           withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
       }
       fetchProducts();
@@ -83,9 +100,12 @@ const AllProducts = () => {
     try {
       await axios.delete(`${summaryAPI.admin.deleteProduct.url}/${productId}`, {
         withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       toast.success("Product deleted successfully", { autoClose: 3000 });
-      fetchProducts(); // Refresh product table
+      fetchProducts(); 
     } catch (err) {
       toast.error("Failed to delete product", { autoClose: 3000 });
       console.error("Error deleting product", err.message);

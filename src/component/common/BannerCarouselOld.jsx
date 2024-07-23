@@ -10,12 +10,15 @@ import "swiper/css/effect-fade";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import Preloader from "../Preloader";
+import { useSelector } from "react-redux";
 
 const BannerCarouselOld = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const token = useSelector((store) => {
+    return store.user.token;
+  });
   const bannersImg = [
     {
       name: "img1",
@@ -48,6 +51,9 @@ const BannerCarouselOld = () => {
       try {
         const response = await axios.get(summaryAPI.common.getAllCategory.url, {
           withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
         if (response.data.success) {
           setCategories(response.data.products);

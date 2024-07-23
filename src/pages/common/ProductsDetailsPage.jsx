@@ -20,7 +20,9 @@ const ProductsDetailsPage = () => {
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
-
+  const token = useSelector((store) => {
+    return store.user.token;
+  });
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -28,6 +30,9 @@ const ProductsDetailsPage = () => {
           `${summaryAPI.common.getProductById.url}/${id}`,
           {
             withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }
         );
         setProduct(response.data);
@@ -50,7 +55,12 @@ const ProductsDetailsPage = () => {
             productId: id,
             quantity: quantity,
           },
-          { withCredentials: true }
+          {
+            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         toast.success("Prodect added to cart");
         dispatch(setCartData(response.data));

@@ -5,6 +5,7 @@ import imageTobase64 from "../../utils/imageTobase64";
 import axios from "axios";
 import summaryAPI from "../../utils/summaryAPI";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 const SignUpOld = () => {
   const navigate = useNavigate();
@@ -18,7 +19,9 @@ const SignUpOld = () => {
     profilePic: "",
   });
   const [error, setError] = useState("");
-
+  const token = useSelector((store) => {
+    return store.user.token;
+  });
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -53,7 +56,12 @@ const SignUpOld = () => {
       return;
     }
     try {
-      const response = await axios.post(summaryAPI.admin.signUP.url, formData);
+      const response = await axios.post(summaryAPI.admin.signUP.url, formData, {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       toast.success(response.data.message);
       console.log(response);
       setError("");

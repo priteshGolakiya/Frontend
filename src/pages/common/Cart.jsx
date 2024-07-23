@@ -19,12 +19,17 @@ const Cart = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
-
+  const token = useSelector((store) => {
+    return store.user.token;
+  });
   useEffect(() => {
     const fetchCart = async () => {
       try {
         const response = await axios.get(summaryAPI.common.getUserCart.url, {
           withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
         dispatch(setCartData(response?.data));
         setCart(response.data);
@@ -44,7 +49,12 @@ const Cart = () => {
       await axios.put(
         `${summaryAPI.common.updateCartItem.url}`,
         { productId, quantity },
-        { withCredentials: true }
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setCart((prevCart) => ({
         ...prevCart,
@@ -66,7 +76,12 @@ const Cart = () => {
       try {
         await axios.delete(
           `${summaryAPI.common.removeFromCart.url}/${productId}`,
-          { withCredentials: true }
+          {
+            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
 
         const updatedCart = cart.items.filter(
@@ -88,6 +103,9 @@ const Cart = () => {
     try {
       await axios.delete(summaryAPI.common.clearCart.url, {
         withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       dispatch(clearCart());
       setCart(null);

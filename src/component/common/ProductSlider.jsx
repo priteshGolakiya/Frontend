@@ -14,17 +14,23 @@ import {
 import Preloader from "../Preloader";
 import { Link } from "react-router-dom";
 import scrollTop from "../../utils/scrollTop";
+import { useSelector } from "react-redux";
 
 const ProductSlider = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const token = useSelector((store) => {
+    return store.user.token;
+  });
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(summaryAPI.common.getAllCategory.url, {
           withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
         if (response.data.success) {
           const allProducts = response.data.products;
@@ -91,7 +97,7 @@ const ProductSlider = () => {
         {categories.map((product) => (
           <SwiperSlide
             key={product._id}
-            className="flex p-10 flex-col items-center"
+            className="flex p-5 flex-col items-center"
           >
             <Link
               to={`/category/${product.category._id}`}

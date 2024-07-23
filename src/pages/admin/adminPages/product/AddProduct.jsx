@@ -3,6 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import summaryAPI from "../../../../utils/summaryAPI";
 import uploadImage from "../../../../utils/uploadImage";
+import { useSelector } from "react-redux";
 
 const AddProduct = () => {
   const [productData, setProductData] = useState({
@@ -26,7 +27,9 @@ const AddProduct = () => {
   const [loading, setLoading] = useState(false);
   const [imagePreviews, setImagePreviews] = useState([]);
   const [errors, setErrors] = useState({});
-
+  const token = useSelector((store) => {
+    return store.user.token;
+  });
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -34,7 +37,7 @@ const AddProduct = () => {
         const response = await axios.get(summaryAPI.admin.getAllCategory.url, {
           withCredentials: true,
           headers: {
-            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         });
         setCategories(response.data.categories);
@@ -149,12 +152,15 @@ const AddProduct = () => {
       const imageURLs = uploadedImages.map((response) => response.secure_url);
 
       // Convert offers to a comma-separated string
-      const offersString = productData.offers.split(",").map((offer) => offer.trim()).join(", ");
+      const offersString = productData.offers
+        .split(",")
+        .map((offer) => offer.trim())
+        .join(", ");
 
       const payload = {
         ...productData,
         images: imageURLs,
-        offers: offersString,  // Convert offers array to string
+        offers: offersString, // Convert offers array to string
         subcategory: productData.subcategory || null,
       };
 
@@ -164,7 +170,7 @@ const AddProduct = () => {
         {
           withCredentials: true,
           headers: {
-            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         }
       );

@@ -14,13 +14,16 @@ import {
 import Preloader from "../Preloader";
 import { Link } from "react-router-dom";
 import scrollTop from "../../utils/scrollTop";
+import { useSelector } from "react-redux";
 
 // eslint-disable-next-line react/prop-types
 const ProductRecommendationSlider = ({ subcategoryId }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const token = useSelector((store) => {
+    return store.user.token;
+  });
   useEffect(() => {
     const fetchData = async () => {
       if (!subcategoryId) {
@@ -33,6 +36,9 @@ const ProductRecommendationSlider = ({ subcategoryId }) => {
           `${summaryAPI.common.getSubcategoryById.url}/${subcategoryId}`,
           {
             withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }
         );
 
@@ -85,7 +91,11 @@ const ProductRecommendationSlider = ({ subcategoryId }) => {
             key={product._id}
             className="flex p-10 flex-col items-center"
           >
-            <Link to={`/products/${product._id}`} className="w-full h-52 mb-4" onClick={scrollTop}>
+            <Link
+              to={`/products/${product._id}`}
+              className="w-full h-52 mb-4"
+              onClick={scrollTop}
+            >
               <img
                 src={product.images[0]}
                 alt={product.name}

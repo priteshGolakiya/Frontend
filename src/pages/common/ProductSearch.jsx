@@ -4,12 +4,15 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import scrollTop from "../../utils/scrollTop";
+import { useSelector } from "react-redux";
 
 const ProductSearch = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const query = queryParams.get("q");
-  
+  const token = useSelector((store) => {
+    return store.user.token;
+  });
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -17,7 +20,12 @@ const ProductSearch = () => {
     try {
       const response = await axios.get(
         `${summaryAPI.common.searchProduct.url}?q=${query}`,
-        { withCredentials: true }
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setData(response.data.products || []);
     } catch (error) {

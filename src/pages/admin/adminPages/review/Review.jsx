@@ -2,17 +2,20 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import summaryAPI from "../../../../utils/summaryAPI";
 import moment from "moment";
+import { useSelector } from "react-redux";
 
 const Review = () => {
   const [reviews, setReviews] = useState([]);
-
+  const token = useSelector((store) => {
+    return store.user.token;
+  });
   useEffect(() => {
     const fetchReviews = async () => {
       try {
         const response = await axios.get(summaryAPI.admin.getAllReviews.url, {
           withCredentials: true,
           headers: {
-            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         });
         setReviews(response.data.reviews);
