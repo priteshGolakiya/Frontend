@@ -271,8 +271,8 @@ const AdminPanel = () => {
                   <ul className={`${isSidebarOpen ? "ml-4" : "ml-0"}`}>
                     <li>
                       <Link
-                        to="/admin-panel/orders/list"
-                        className={getLinkClass("/admin-panel/orders/list")}
+                        to="/admin-panel/ordersList"
+                        className={getLinkClass("/admin-panel/ordersList")}
                       >
                         <FaList className="mr-2" />
                         {isSidebarOpen && "Order List"}

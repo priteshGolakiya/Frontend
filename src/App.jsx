@@ -60,7 +60,7 @@ const App = () => {
             <Route path="category/new" element={<NewCategory />} />
             <Route path="sub-category/list" element={<SubCategoryList />} />
             <Route path="sub-category/new" element={<SubNewCategory />} />
-            <Route path="orders/list" element={<OrdersList />} />
+            <Route path="ordersList" element={<OrdersList />} />
             <Route path="orders/detail/:id" element={<OrderDetail />} />
             {/* <Route path="orders/tracking" element={<OrderTracking />} /> */}
             <Route path="review" element={<Review />} />

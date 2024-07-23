@@ -12,9 +12,7 @@ const ReviewComponent = ({ onSubmitReview, productId }) => {
     review: "",
   });
   const user = useSelector((state) => state.user.user);
-  const token = useSelector((store) => {
-    return store.user.token;
-  });
+  const token = useSelector((store) => store.user.token);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -30,9 +28,15 @@ const ReviewComponent = ({ onSubmitReview, productId }) => {
           },
         }
       );
-      setData(response.data.reviews);
+      if (Array.isArray(response.data.reviews)) {
+        setData(response.data.reviews);
+      } else {
+        console.error("Reviews data is not an array:", response.data);
+        setData([]);
+      }
     } catch (err) {
       setError("Error fetching product data: " + err.message);
+      setData([]);
     } finally {
       setLoading(false);
     }
@@ -70,7 +74,7 @@ const ReviewComponent = ({ onSubmitReview, productId }) => {
         if (response.data.success) {
           toast.success("Review submitted successfully!");
           onSubmitReview(response.data.review);
-          setData(response.data.success);
+          fetchReviewsforProduct(); // Refresh the reviews
           setNewReview({ rating: 5, review: "" });
         } else {
           toast.error("Failed to submit review. Please try again.");
@@ -91,16 +95,15 @@ const ReviewComponent = ({ onSubmitReview, productId }) => {
     const { name, value } = e.target;
     setNewReview((prev) => ({ ...prev, [name]: value }));
   };
+
   if (loading) {
     return <Preloader />;
   }
 
-  if (error || !data) {
+  if (error) {
     return (
       <div className="container mx-auto p-4">
-        <div className="text-red-500 text-center text-xl">
-          {error || "No product data found."}
-        </div>
+        <div className="text-red-500 text-center text-xl">{error}</div>
       </div>
     );
   }
@@ -184,30 +187,34 @@ const ReviewComponent = ({ onSubmitReview, productId }) => {
         </button>
       </form>
 
-      {data.map((review) => (
-        <div
-          key={review._id}
-          className="bg-white mt-4 shadow-md rounded-lg p-6 mb-4"
-        >
-          <div className="flex justify-between items-center mb-2">
-            <div>
-              <img
-                className="w-10 h-10 rounded-full"
-                src={review.user.profilePic}
-                alt={review.user.email}
-              />
-              <p className="text-sm text-gray-600">{review.user.email}</p>
+      {Array.isArray(data) && data.length > 0 ? (
+        data.map((review) => (
+          <div
+            key={review._id}
+            className="bg-white mt-4 shadow-md rounded-lg p-6 mb-4"
+          >
+            <div className="flex justify-between items-center mb-2">
+              <div>
+                <img
+                  className="w-10 h-10 rounded-full"
+                  src={review.user.profilePic}
+                  alt={review.user.email}
+                />
+                <p className="text-sm text-gray-600">{review.user.email}</p>
+              </div>
+              <p className="text-sm text-gray-600">{formatDate(review.date)}</p>
             </div>
-            <p className="text-sm text-gray-600">{formatDate(review.date)}</p>
+            <div className="flex items-center mb-2">
+              <span className="text-sm bg-green-500 text-white px-1.5 py-0.5 rounded">
+                {review.rating} ★
+              </span>
+            </div>
+            <p className="text-gray-800">{review.review}</p>
           </div>
-          <div className="flex items-center mb-2">
-            <span className="text-sm bg-green-500 text-white px-1.5 py-0.5 rounded">
-              {review.rating} ★
-            </span>
-          </div>
-          <p className="text-gray-800">{review.review}</p>
-        </div>
-      ))}
+        ))
+      ) : (
+        <p>No reviews yet.</p>
+      )}
     </div>
   );
 };

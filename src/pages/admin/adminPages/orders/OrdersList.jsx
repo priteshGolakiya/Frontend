@@ -8,9 +8,8 @@ import { useSelector } from "react-redux";
 const OrdersList = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
-  const token = useSelector((store) => {
-    return store.user.token;
-  });
+  const token = useSelector((store) => store.user.token);
+
   useEffect(() => {
     fetchOrders();
   }, []);
@@ -47,6 +46,23 @@ const OrdersList = () => {
       fetchOrders();
     } catch (error) {
       toast.error("Error updating order status: " + error.message);
+    }
+  };
+
+  const handleDeleteOrder = async (orderId) => {
+    if (window.confirm("Are you sure you want to delete this order?")) {
+      try {
+        await axios.delete(`${summaryAPI.admin.deleteOrder.url}/${orderId}`, {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        toast.success("Order deleted successfully");
+        fetchOrders();
+      } catch (error) {
+        toast.error("Error deleting order: " + error.message);
+      }
     }
   };
 
@@ -112,7 +128,7 @@ const OrdersList = () => {
                     <div className="flex item-center justify-center">
                       <Link
                         to={`/admin-panel/orders/detail/${order._id}`}
-                        className="w-4 mr-2 relative  transform hover:text-blue-500 hover:scale-110"
+                        className="w-4 mr-2 relative transform hover:text-blue-500 hover:scale-110"
                       >
                         <i className="fa-solid fa-eye absolute top-2 right-2"></i>
                       </Link>
@@ -128,6 +144,12 @@ const OrdersList = () => {
                         <option value="delivered">Delivered</option>
                         <option value="cancelled">Cancelled</option>
                       </select>
+                      <button
+                        onClick={() => handleDeleteOrder(order._id)}
+                        className="w-4 ml-2 transform hover:text-red-500 hover:scale-110"
+                      >
+                        <i className="fas fa-trash-alt"></i>
+                      </button>
                     </div>
                   </td>
                 </tr>

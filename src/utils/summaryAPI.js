@@ -1,6 +1,6 @@
 // const backendDomain = "http://localhost:5000";
-const backendDomain = "https://backend-y1aw.onrender.com";
-
+// const backendDomain = "https://backend-y1aw.onrender.com";
+const backendDomain = import.meta.env.VITE_APP_BACKENDDOMAIN;
 const summaryAPI = {
   /*------Common Routes------*/
   common: {
@@ -217,15 +217,15 @@ const summaryAPI = {
     },
     getReviewsforProduct: {
       method: "GET",
-      url: `${backendDomain}/admin/reviews/:productId`,
+      url: `${backendDomain}/admin/reviews`,
     },
     updateReview: {
       method: "PUT",
-      url: `${backendDomain}/admin/reviews/:reviewId`,
+      url: `${backendDomain}/admin/reviews`,
     },
     deleteReview: {
       method: "DELETE",
-      url: `${backendDomain}/admin/reviews/:reviewId`,
+      url: `${backendDomain}/admin/reviews`,
     },
     /*------Cart Routes------ */
     getAllCarts: {
@@ -263,6 +263,10 @@ const summaryAPI = {
     },
     updateOrderStatus: {
       method: "PUT",
+      url: `${backendDomain}/admin/order`,
+    },
+    deleteOrder: {
+      method: "DELETE",
       url: `${backendDomain}/admin/order`,
     },
   },
