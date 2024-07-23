@@ -128,7 +128,7 @@ const OrderDetail = () => {
             <div className="space-y-2">
               <p className="text-sm font-medium text-gray-500">Total Amount</p>
               <p className="text-lg font-semibold text-green-600">
-                ${order.totalAmount ? order.totalAmount.toFixed(2) : "0.00"}
+                ₹{order.totalAmount ? order.totalAmount.toFixed(2) : "0.00"}
               </p>
             </div>
           </div>
@@ -185,13 +185,13 @@ const OrderDetail = () => {
                         </td>
                         <td className="py-4 px-4">{item.quantity}</td>
                         <td className="py-4 px-4">
-                          $
+                        ₹
                           {item.product
                             ? item.product.price.toFixed(2)
                             : "0.00"}
                         </td>
                         <td className="py-4 px-4">
-                          $
+                        ₹
                           {item.product
                             ? (item.quantity * item.product.price).toFixed(2)
                             : "0.00"}

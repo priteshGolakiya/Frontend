@@ -14,6 +14,10 @@ const OrdersList = () => {
     fetchOrders();
   }, []);
 
+  const formatPrice = (price) => {
+    return typeof price === "number" ? price.toFixed(2) : "N/A";
+  };
+
   const fetchOrders = async () => {
     try {
       const response = await axios.get(summaryAPI.admin.getAllOrders.url, {
@@ -105,7 +109,7 @@ const OrdersList = () => {
                   </td>
                   <td className="py-3 px-6 text-center">
                     <span className="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">
-                      ${order.totalAmount.toFixed(2)}
+                      ₹{formatPrice(order.totalAmount)}
                     </span>
                   </td>
                   <td className="py-3 px-6 text-center">
