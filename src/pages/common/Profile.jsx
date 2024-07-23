@@ -321,7 +321,6 @@ const Profile = () => {
                                     </p>
                                     <p className="text-sm text-gray-600">
                                       Quantity: {item.quantity || 0} | Price: ₹
-                                      {console.log("item", item)}
                                       {(item.product.finalPrice || 0).toFixed(2)}
                                     </p>
                                   </div>
