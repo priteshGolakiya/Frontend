@@ -114,7 +114,7 @@ const OrdersPage = () => {
         cartItems: selectedCartData.items.map((item) => ({
           product: item.product._id,
           quantity: item.quantity,
-          price: item.product.price,
+          finalPrice: item.product.finalPrice,
         })),
         shippingAddressId: selectedAddress,
         totalAmount: selectedCartData.totalPrice,
@@ -161,7 +161,7 @@ const OrdersPage = () => {
     >
       <h4 className="font-semibold mb-2">Cart {cart._id}</h4>
       <p className="text-sm text-gray-600 mb-2">
-        Total: ${cart.totalPrice.toFixed(2)}
+        Total: ₹{cart.totalPrice.toFixed(2)}
       </p>
       <ul className="text-sm">
         {cart.items && cart.items.length > 0 ? (
@@ -175,7 +175,7 @@ const OrdersPage = () => {
               <div>
                 <p className="font-medium">{item.product.name}</p>
                 <p className="text-xs text-gray-500">
-                  Quantity: {item.quantity} | Price: ${item.price.toFixed(2)}
+                  Quantity: {item.quantity} | Price: ₹{item.price.toFixed(2)}
                 </p>
                 <p className="text-xs text-gray-500">
                   Brand: {item.product.brand}
