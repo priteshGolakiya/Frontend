@@ -23,7 +23,6 @@ const AllUser = () => {
   const [error, setError] = useState(null);
   const token = useSelector((store) => store.user.token);
   const curantUserId = useSelector((store) => store.user.user.id);
-  console.log("curantUserId", curantUserId);
 
   useEffect(() => {
     const fetchUserData = async () => {
