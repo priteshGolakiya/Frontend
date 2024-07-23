@@ -320,7 +320,7 @@ const Profile = () => {
                                       {item.product?.name || "Unknown Product"}
                                     </p>
                                     <p className="text-sm text-gray-600">
-                                      Quantity: {item.quantity || 0} | Price: $
+                                      Quantity: {item.quantity || 0} | Price: ₹
                                       {(item.price || 0).toFixed(2)}
                                     </p>
                                   </div>
