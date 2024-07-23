@@ -185,15 +185,17 @@ const OrderDetail = () => {
                         </td>
                         <td className="py-4 px-4">{item.quantity}</td>
                         <td className="py-4 px-4">
-                        ₹
+                          ₹
                           {item.product
-                            ? item.product.price.toFixed(2)
+                            ? item.product.finalPrice.toFixed(2)
                             : "0.00"}
                         </td>
                         <td className="py-4 px-4">
-                        ₹
+                          ₹
                           {item.product
-                            ? (item.quantity * item.product.price).toFixed(2)
+                            ? (item.quantity * item.product.finalPrice).toFixed(
+                                2
+                              )
                             : "0.00"}
                         </td>
                       </tr>

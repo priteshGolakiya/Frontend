@@ -106,8 +106,8 @@ const ProductRecommendationSlider = ({ subcategoryId }) => {
             <p className="text-md text-gray-600 text-center">
               Brand: {product.brand}
             </p>
-            <p className="text-lg font-bold text-center">
-              ₹{product.discountPrice}
+            <p className="text-lg font-bold text-center text-green-600">
+              ₹{product.price - product.discountPrice}
             </p>
           </SwiperSlide>
         ))}
