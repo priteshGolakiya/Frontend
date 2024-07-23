@@ -41,7 +41,7 @@ const OrderDetail = () => {
   const handleStatusUpdate = async (newStatus) => {
     try {
       await axios.put(
-        `${summaryAPI.admin.updateOrderStatus.url}/${id}`,
+        `${summaryAPI.admin.updateOrderStatus.url}/${id}/status`,
         { status: newStatus },
         {
           withCredentials: true,
