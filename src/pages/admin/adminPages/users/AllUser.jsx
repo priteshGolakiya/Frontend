@@ -18,11 +18,11 @@ const AllUser = () => {
     userName: "",
     email: "",
     password: "",
+    role: "",
   });
   const [error, setError] = useState(null);
-  const token = useSelector((store) => {
-    return store.user.token;
-  });
+  const token = useSelector((store) => store.user.token);
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -41,7 +41,7 @@ const AllUser = () => {
     };
 
     fetchUserData();
-  }, []);
+  }, [token]);
 
   const openModal = (user) => {
     setCurrentUser(user);
@@ -137,7 +137,7 @@ const AllUser = () => {
             </thead>
             <tbody className="divide-y divide-gray-300">
               {userData
-                .filter((user) => user.role !== "admin")
+                // .filter((user) => user.role !== "admin")
                 .map((user) => (
                   <tr
                     key={user._id}
@@ -225,7 +225,20 @@ const AllUser = () => {
                 className="mt-1 p-3 border border-gray-300 rounded-2xl w-full focus:ring-indigo-500 focus:border-indigo-500 transition duration-400 shadow-md"
               />
             </div>
-
+            <div className="mb-5">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Role
+              </label>
+              <select
+                name="role"
+                value={formData.role}
+                onChange={handleChange}
+                className="mt-1 p-3 border border-gray-300 rounded-2xl w-full focus:ring-indigo-500 focus:border-indigo-500 transition duration-400 shadow-md"
+              >
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
             <div className="text-right">
               <button
                 type="submit"
