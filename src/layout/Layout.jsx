@@ -23,7 +23,7 @@ function Layout() {
       <ScrollToTop />
 
       <Navbar />
-      <main className="min-h-[calc(100vh-120px)] pt-20">
+      <main className="min-h-[calc(100vh-120px)] pt-24">
         <Outlet />
       </main>
       <Footer />
