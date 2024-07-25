@@ -81,15 +81,6 @@ const Navbar = () => {
     }
   };
 
-  // const searchHendlear = (e) => {
-  //   const { value } = e.target;
-  //   if (value) {
-  //     navigate(`/search?q=${value}`);
-  //   } else {
-  //     navigate(`/search`);
-  //   }
-  // };
-
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
@@ -98,7 +89,7 @@ const Navbar = () => {
         navigate(`/search?q=${searchTerm}`);
       }
       setSearchTerm("");
-    }, 700);
+    }, 600);
 
     return () => clearTimeout(timeoutId);
   }, [navigate, searchTerm]);
@@ -130,12 +121,6 @@ const Navbar = () => {
             } w-full md:w-auto`}
           >
             <div className="relative mx-4 my-2 md:my-0">
-              {/* <input
-                type="text"
-                placeholder="Search"
-                onChange={searchHendlear}
-                className="w-full pl-8 pr-4 py-2 rounded-lg focus:outline-none focus:ring focus:border-blue-300"
-              /> */}
               <input
                 type="text"
                 placeholder="Search"
@@ -204,32 +189,6 @@ const Navbar = () => {
               )}
             </div>
           </div>
-        </div>
-
-        {/* Responsive Menu */}
-        <div
-          className={`md:hidden ${
-            isOpen ? "block" : "hidden"
-          } bg-white text-gray-700 absolute top-16 left-0 right-0 z-50`}
-        >
-          <Link to="/" className="block py-2 px-4 border-b border-gray-200">
-            Home
-          </Link>
-          <Link to="/shop" className="block py-2 px-4 border-b border-gray-200">
-            Shop
-          </Link>
-          <Link
-            to="/about"
-            className="block py-2 px-4 border-b border-gray-200"
-          >
-            About
-          </Link>
-          <Link
-            to="/contact"
-            className="block py-2 px-4 border-b border-gray-200"
-          >
-            Contact
-          </Link>
         </div>
       </nav>
     </header>
