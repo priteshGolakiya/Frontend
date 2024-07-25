@@ -205,7 +205,7 @@ const Profile = () => {
                   <img
                     src={userData.profilePic || "../../assest/sampleImage.jpg"}
                     alt="Profile"
-                    className="w-48 h-48 rounded-full mx-auto shadow-lg border-4 border-white"
+                    className="w-48 h-48  rounded-full mx-auto shadow-lg border-4 border-white"
                   />
                 </div>
                 <div className="space-y-6 bg-gray-50 p-6 rounded-lg shadow-md">
@@ -313,7 +313,7 @@ const Profile = () => {
                                   <img
                                     src={item.product?.images[0] || ""}
                                     alt={item.product?.name || "Product"}
-                                    className="w-20 h-20 object-cover rounded-md"
+                                    className="w-20 h-20 object-contain rounded-md"
                                   />
                                   <div>
                                     <p className="text-lg font-medium text-gray-800">
@@ -321,7 +321,9 @@ const Profile = () => {
                                     </p>
                                     <p className="text-sm text-gray-600">
                                       Quantity: {item.quantity || 0} | Price: ₹
-                                      {(item.product.finalPrice || 0).toFixed(2)}
+                                      {(item.product.finalPrice || 0).toFixed(
+                                        2
+                                      )}
                                     </p>
                                   </div>
                                 </li>
