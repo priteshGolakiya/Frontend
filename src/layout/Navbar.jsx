@@ -23,6 +23,7 @@ const Navbar = () => {
   const token = useSelector((store) => {
     return store.user.token;
   });
+
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
@@ -40,7 +41,7 @@ const Navbar = () => {
     };
 
     fetchUserDetails();
-  }, [dispatch]);
+  }, [dispatch, token]);
 
   useEffect(() => {
     const fetchCartData = async () => {
@@ -58,7 +59,7 @@ const Navbar = () => {
     };
 
     fetchCartData();
-  }, [dispatch]);
+  }, [dispatch, token]);
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
