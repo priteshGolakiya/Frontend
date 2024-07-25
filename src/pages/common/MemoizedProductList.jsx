@@ -29,7 +29,7 @@ const MemoizedProductList = memo(({ products, lastProductRef }) => (
             <h2 className="text-xl font-semibold mb-2">{product.name}</h2>
             <p className="text-gray-700 mb-1">Brand: {product.brand}</p>
             <p className="text-green-700 font-bold mb-1">
-              Price: ₹{formatPrice(product.finalPrice)}
+              Price: ₹{formatPrice(Number(product.finalPrice))}
             </p>
             <Link
               to={`/products/${product._id}`}
