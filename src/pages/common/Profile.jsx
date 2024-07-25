@@ -205,7 +205,7 @@ const Profile = () => {
                   <img
                     src={userData.profilePic || "../../assest/sampleImage.jpg"}
                     alt="Profile"
-                    className="w-48 h-48  rounded-full mx-auto shadow-lg border-4 border-white"
+                    className="w-48 h-48 object-cover rounded-full mx-auto shadow-lg border-4 border-white"
                   />
                 </div>
                 <div className="space-y-6 bg-gray-50 p-6 rounded-lg shadow-md">
