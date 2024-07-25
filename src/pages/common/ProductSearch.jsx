@@ -77,7 +77,7 @@ const ProductSearch = () => {
                     <img
                       src={product.images[0]}
                       alt={product.name}
-                      className="w-full h-64 object-contain cursor-zoom-in"
+                      className="w-full p-2 h-64 object-contain cursor-zoom-in"
                     />
                   </PhotoView>
                   <div className="p-6">

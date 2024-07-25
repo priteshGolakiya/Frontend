@@ -3,6 +3,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Footer from "./Footer.jsx";
 import Navbar from "./Navbar.jsx";
+// import NavbarSecond from "./NavbarSecond.jsx";
 import ScrollToTop from "../component/common/ScrollToTop.jsx";
 
 function Layout() {
@@ -23,7 +24,10 @@ function Layout() {
       <ScrollToTop />
 
       <Navbar />
-      <main className="min-h-[calc(100vh-120px)] pt-24">
+      {/* <div className="pt-24">
+        <MenuNavbar />
+      </div> */}
+      <main className="min-h-[calc(100vh-120px)] pt-28">
         <Outlet />
       </main>
       <Footer />

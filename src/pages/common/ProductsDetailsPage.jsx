@@ -23,6 +23,7 @@ const ProductsDetailsPage = () => {
   const token = useSelector((store) => {
     return store.user.token;
   });
+  
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -44,7 +45,7 @@ const ProductsDetailsPage = () => {
     };
 
     fetchProduct();
-  }, [id]);
+  }, [id, token]);
 
   const addToCart = async () => {
     if (user) {

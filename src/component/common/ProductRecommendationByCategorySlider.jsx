@@ -103,7 +103,7 @@ const ProductRecommendationByCategorySlider = ({
         {products.map((product) => (
           <SwiperSlide
             key={product._id}
-            className="flex p-10 flex-col items-center"
+            className="flex  flex-col items-center"
           >
             <Link
               to={`/subcategory/${product.subcategoryId}`}

@@ -50,7 +50,7 @@ const AdminPanel = () => {
   };
 
   return (
-    <div className="min-h-screen mt-6 h-[calc(100vh-200px)] overflow-hidden flex bg-gray-100">
+    <div className="min-h-screen  h-[calc(100vh-200px)] overflow-hidden flex bg-gray-100">
       {/* Sidebar */}
       <aside
         className={`bg-gray-800  text-gray-300 ${

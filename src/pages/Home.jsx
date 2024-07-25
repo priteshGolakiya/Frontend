@@ -12,7 +12,7 @@ const Home = () => {
         <BannerCarousel />
       </div>
       <div className="mt-8">
-        <h2 className="text-xl font-semibold mb-4">All Products</h2>
+        {/* <h2 className="text-xl font-semibold mb-4">All Products</h2> */}
         <AllProducts />
       </div>
     </div>

@@ -43,7 +43,6 @@ const ProductRecommendationSlider = ({ subcategoryId }) => {
         );
 
         if (response.data.success && response.data.products) {
-          // Shuffle the products array and take the first 10 (or less if there are fewer products)
           const shuffled = response.data.products.sort(
             () => 0.5 - Math.random()
           );
@@ -89,7 +88,7 @@ const ProductRecommendationSlider = ({ subcategoryId }) => {
         {products.map((product) => (
           <SwiperSlide
             key={product._id}
-            className="flex p-10 flex-col items-center"
+            className="flex  flex-col items-center"
           >
             <Link
               to={`/products/${product._id}`}

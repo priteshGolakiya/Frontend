@@ -17,6 +17,7 @@ const SubCategoryListPage = () => {
   const token = useSelector((store) => {
     return store.user.token;
   });
+  const [isFilterVisible, setIsFilterVisible] = useState(false);
   const [sortOrder, setSortOrder] = useState("");
   const [priceRange, setPriceRange] = useState({ min: "", max: "" });
   const [ratingFilter, setRatingFilter] = useState("");
@@ -120,77 +121,97 @@ const SubCategoryListPage = () => {
           No products available in this subcategory.
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="hidden md:block">
-            <div className="bg-white p-4 rounded-lg shadow">
-              <h2 className="text-lg font-semibold mb-4">Filters</h2>
-              <Filters
-                sortOrder={sortOrder}
-                setSortOrder={setSortOrder}
-                priceRange={priceRange}
-                setPriceRange={setPriceRange}
-                ratingFilter={ratingFilter}
-                setRatingFilter={setRatingFilter}
-                discountFilter={discountFilter}
-                setDiscountFilter={setDiscountFilter}
-                clearFilter={clearFilter}
-              />
-            </div>
-          </div>
+        <div className="relative">
+          {/* Mobile filter toggle button */}
+          <button
+            className="md:hidden bg-cyan-400 text-white font-bold py-2 px-4 rounded mb-4"
+            onClick={() => setIsFilterVisible(!isFilterVisible)}
+          >
+            {isFilterVisible ? "Hide Filters" : "Show Filters"}
+          </button>
 
-          <div className="md:col-span-3 h-[calc(100vh-200px)] overflow-y-scroll scrollbar-hidden">
-            {filteredProducts.map((product) => (
-              <Link
-                key={product._id}
-                to={`/products/${product._id}`}
-                className="block mb-4 bg-white p-4 rounded-lg shadow hover:shadow-md transition-shadow duration-300"
-              >
-                <div className="flex">
-                  <div className="w-40 h-40 mr-4 flex-shrink-0">
-                    {product.images && product.images.length > 0 && (
-                      <PhotoProvider>
-                        <PhotoView src={product.images[0]}>
-                          <img
-                            src={product.images[0]}
-                            alt={product.name}
-                            className="w-full h-full object-contain mix-blend-multiply"
-                          />
-                        </PhotoView>
-                      </PhotoProvider>
-                    )}
-                  </div>
-                  <div className="flex-grow">
-                    <h3 className="text-lg font-medium mb-2">{product.name}</h3>
-                    <div className="flex items-center mb-2">
-                      <span className="text-sm bg-green-500 text-white px-1.5 py-0.5 rounded">
-                        {formatPrice(product.averageRating)} ★
-                      </span>
-                      <span className="text-sm text-gray-500 ml-2">
-                        ({product.numberOfRatings} ratings)
-                      </span>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            {/* Filter section */}
+            <div
+              className={`md:block ${
+                isFilterVisible ? "block" : "hidden"
+              } mb-4 md:mb-0`}
+            >
+              <div className="bg-white p-4 rounded-lg shadow">
+                <h2 className="text-lg font-semibold mb-4">Filters</h2>
+                <Filters
+                  sortOrder={sortOrder}
+                  setSortOrder={setSortOrder}
+                  priceRange={priceRange}
+                  setPriceRange={setPriceRange}
+                  ratingFilter={ratingFilter}
+                  setRatingFilter={setRatingFilter}
+                  discountFilter={discountFilter}
+                  setDiscountFilter={setDiscountFilter}
+                  clearFilter={clearFilter}
+                />
+              </div>
+            </div>
+
+            {/* Product list */}
+            <div className="md:col-span-3 h-[calc(100vh-200px)] md:h-[calc(100vh-150px)] overflow-y-auto scrollbar-hidden">
+              {filteredProducts.map((product) => (
+                <Link
+                  key={product._id}
+                  to={`/products/${product._id}`}
+                  className="block mb-4 bg-white p-4 rounded-lg shadow hover:shadow-md transition-shadow duration-300"
+                >
+                  <div className="flex flex-col sm:flex-row">
+                    <div className="w-full sm:w-40 h-40 mb-4 sm:mb-0 sm:mr-4 flex-shrink-0">
+                      {product.images && product.images.length > 0 && (
+                        <PhotoProvider>
+                          <PhotoView src={product.images[0]}>
+                            <img
+                              src={product.images[0]}
+                              alt={product.name}
+                              className="w-full h-full object-contain mix-blend-multiply"
+                            />
+                          </PhotoView>
+                        </PhotoProvider>
+                      )}
                     </div>
-                    <ul className="list-disc list-inside text-sm text-gray-600 mb-2">
-                      <li>{product.brand}</li>
-                    </ul>
-                    <div className="flex items-center">
-                      <span className="text-xl font-bold">
-                        ₹{formatPrice(product.price - product.discountPrice)}
-                      </span>
-                      <span className="text-sm text-gray-500 line-through ml-2">
-                        ₹{formatPrice(product.price)}
-                      </span>
-                      <span className="text-sm text-green-600 ml-2">
-                        {Math.round(
-                          (product.discountPrice / product.price) * 100
-                        )}
-                        % off
-                      </span>
+                    <div className="flex-grow">
+                      <h3 className="text-lg font-medium mb-2">
+                        {product.name}
+                      </h3>
+                      <div className="flex items-center mb-2">
+                        <span className="text-sm bg-green-500 text-white px-1.5 py-0.5 rounded">
+                          {formatPrice(product.averageRating)} ★
+                        </span>
+                        <span className="text-sm text-gray-500 ml-2">
+                          ({product.numberOfRatings} ratings)
+                        </span>
+                      </div>
+                      <ul className="list-disc list-inside text-sm text-gray-600 mb-2">
+                        <li>{product.brand}</li>
+                      </ul>
+                      <div className="flex items-center flex-wrap">
+                        <span className="text-xl font-bold">
+                          ₹{formatPrice(product.price - product.discountPrice)}
+                        </span>
+                        <span className="text-sm text-gray-500 line-through ml-2">
+                          ₹{formatPrice(product.price)}
+                        </span>
+                        <span className="text-sm text-green-600 ml-2">
+                          {Math.round(
+                            (product.discountPrice / product.price) * 100
+                          )}
+                          % off
+                        </span>
+                      </div>
+                      <p className="text-sm text-gray-500 mt-1">
+                        Free delivery
+                      </p>
                     </div>
-                    <p className="text-sm text-gray-500 mt-1">Free delivery</p>
                   </div>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       )}
