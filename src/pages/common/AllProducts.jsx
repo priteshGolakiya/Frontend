@@ -15,8 +15,8 @@ const useInfiniteScroll = (callback) => {
   useEffect(() => {
     const options = {
       root: null,
-      rootMargin: "100px",
-      threshold: 0.1,
+      rootMargin: "300px",
+      threshold: 0.2,
     };
 
     observer.current = new IntersectionObserver(([entry]) => {
