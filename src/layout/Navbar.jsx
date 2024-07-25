@@ -227,7 +227,7 @@ const Navbar = () => {
             <div className="md:hidden flex items-center">
               <button
                 onClick={toggleMenu}
-                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                className="inline-flex items-center justify-center p-2 rounded-md text-blue-500 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
               >
                 <span className="sr-only">Open main menu</span>
                 {isOpen ? (
@@ -260,7 +260,7 @@ const Navbar = () => {
           {/* Cart Link */}
           <Link
             to="/cart"
-            className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+            className="text-blue-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
           >
             Cart ({cart.totalQuantity})
           </Link>
@@ -312,7 +312,7 @@ const Navbar = () => {
           ) : (
             <Link
               to="/login"
-              className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+              className="text-blue-300 hover:bg-blue-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
             >
               Login
             </Link>
@@ -325,7 +325,7 @@ const Navbar = () => {
                 <div key={category._id}>
                   <button
                     onClick={() => toggleCategory(category._id)}
-                    className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left justify-between items-center"
+                    className="text-blue-500 hover:bg-blue-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left justify-between items-center"
                   >
                     {category.name}
                     <i
@@ -342,7 +342,7 @@ const Navbar = () => {
                         <Link
                           key={subcategory._id}
                           to={`/subcategory/${subcategory._id}`}
-                          className="text-gray-100 hover:bg-gray-500 hover:bg-opacity-75 block px-3 py-2 rounded-md text-base font-medium"
+                          className="text-blue-300 hover:bg-blue-500 hover:bg-opacity-75 block px-3 py-2 rounded-md text-base font-medium"
                         >
                           {subcategory.name}
                         </Link>
