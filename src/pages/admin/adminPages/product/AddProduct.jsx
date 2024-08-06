@@ -50,7 +50,7 @@ const AddProduct = () => {
     };
 
     fetchCategories();
-  }, []);
+  }, [token]);
 
   const handleChange = (e) => {
     const { name, type } = e.target;
