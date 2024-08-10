@@ -62,8 +62,33 @@ const Navbar = () => {
         const response = await axios.get(summaryAPI.common.getAllCategory.url, {
           withCredentials: true,
         });
+
         if (response.data.success) {
-          setCategories(response.data.products);
+          const products = response.data.products;
+
+          const uniqueCategories = {};
+          products.forEach((product) => {
+            const { category, subcategory } = product;
+
+            if (category && subcategory) {
+              if (!uniqueCategories[category._id]) {
+                uniqueCategories[category._id] = {
+                  ...category,
+                  subcategories: [],
+                };
+              }
+
+              if (
+                !uniqueCategories[category._id].subcategories.some(
+                  (sub) => sub._id === subcategory._id
+                )
+              ) {
+                uniqueCategories[category._id].subcategories.push(subcategory);
+              }
+            }
+          });
+
+          setCategories(Object.values(uniqueCategories));
         } else {
           console.error("Failed to fetch categories:", response.data);
         }
@@ -80,18 +105,20 @@ const Navbar = () => {
   }, [dispatch, token]);
 
   const groupedCategories = useMemo(() => {
-    return categories.reduce((acc, product) => {
-      const categoryId = product.category._id;
+    return categories.reduce((acc, category) => {
+      const categoryId = category._id;
       if (!acc[categoryId]) {
-        acc[categoryId] = { ...product.category, subcategories: [] };
+        acc[categoryId] = { ...category, subcategories: [] };
       }
-      if (
-        !acc[categoryId].subcategories.some(
-          (sub) => sub._id === product.subcategory._id
-        )
-      ) {
-        acc[categoryId].subcategories.push(product.subcategory);
-      }
+      category.subcategories.forEach((subcategory) => {
+        if (
+          !acc[categoryId].subcategories.some(
+            (sub) => sub._id === subcategory._id
+          )
+        ) {
+          acc[categoryId].subcategories.push(subcategory);
+        }
+      });
       return acc;
     }, {});
   }, [categories]);
