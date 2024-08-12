@@ -3,8 +3,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Footer from "./Footer.jsx";
 import Navbar from "./Navbar.jsx";
-// import NavbarSecond from "./NavbarSecond.jsx";
 import ScrollToTop from "../component/common/ScrollToTop.jsx";
+import AdSense from "../AdSense.jsx";
 
 function Layout() {
   return (
@@ -24,12 +24,12 @@ function Layout() {
       <ScrollToTop />
 
       <Navbar />
-      {/* <div className="pt-24">
-        <MenuNavbar />
-      </div> */}
       <main className="min-h-[calc(100vh-120px)] pt-28">
         <Outlet />
       </main>
+      <aside className="bg-red-500">
+        <AdSense />
+      </aside>
       <Footer />
     </>
   );
