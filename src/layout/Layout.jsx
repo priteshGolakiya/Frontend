@@ -27,7 +27,7 @@ function Layout() {
       <main className="min-h-[calc(100vh-120px)] pt-28">
         <Outlet />
       </main>
-      <aside className="bg-red-500">
+      <aside className="p-32">
         <AdSense />
       </aside>
       <Footer />
