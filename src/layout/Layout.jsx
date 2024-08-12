@@ -9,6 +9,11 @@ import AdSense from "../AdSense.jsx";
 function Layout() {
   return (
     <>
+      <script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8239493855484450"
+        crossOrigin="anonymous"
+      ></script>
       <ToastContainer
         autoClose={2000}
         position="top-right"
