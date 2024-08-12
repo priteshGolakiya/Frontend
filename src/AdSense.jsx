@@ -3,9 +3,13 @@ import { useEffect } from "react";
 const AdSense = () => {
   useEffect(() => {
     try {
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
+      if (window.adsbygoogle) {
+        window.adsbygoogle.push({});
+      } else {
+        console.log("AdSense is blocked or not available.");
+      }
     } catch (error) {
-      console.error("AdSense error:", error);
+      console.log("AdSense error: ", error);
     }
   }, []);
 
@@ -17,7 +21,7 @@ const AdSense = () => {
       data-ad-slot="4566419322"
       data-ad-format="auto"
       data-full-width-responsive="true"
-    />
+    ></ins>
   );
 };
 
