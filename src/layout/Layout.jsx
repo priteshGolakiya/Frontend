@@ -25,10 +25,10 @@ function Layout() {
       <Navbar />
       <main className="min-h-[calc(100vh-120px)] pt-28">
         <Outlet />
+        <div className="p-32">
+          <AdSense />
+        </div>
       </main>
-      <aside className="p-32">
-        <AdSense />
-      </aside>
       <Footer />
     </>
   );
