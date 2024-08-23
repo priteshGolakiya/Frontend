@@ -203,7 +203,7 @@ const Profile = () => {
               <div className="col-span-1">
                 <div className="mb-8 text-center">
                   <img
-                    src={userData.profilePic || "../../assest/sampleImage.jpg"}
+                    src={userData.profilePic || "https://e-commerce-070.netlify.app/assets/default-cBheUuq8.jpg"}
                     alt="Profile"
                     className="w-48 h-48 object-cover rounded-full mx-auto shadow-lg border-4 border-white"
                   />
